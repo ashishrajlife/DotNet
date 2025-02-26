@@ -1,91 +1,81 @@
-﻿using System;
+using System;
 
-class Calculator
+class BasicCalculator
 {
     static void Main()
     {
-        while (true)
+        Console.Clear();
+        Console.WriteLine("Basic Calculator");
+        Console.WriteLine("===================");
+
+        double firstNumber = GetNumber("Enter the first number: ");
+        double secondNumber = GetNumber("Enter the second number: ");
+
+        Console.WriteLine("Choose an operation:");
+        Console.WriteLine("1. Addition");
+        Console.WriteLine("2. Subtraction");
+        Console.WriteLine("3. Multiplication");
+        Console.WriteLine("4. Division");
+        Console.WriteLine("5. Square Root (First Number)");
+        Console.Write("Enter your choice: ");
+
+        int operation = GetChoice(1, 5);
+        double output = 0;
+
+        switch (operation)
         {
-            Console.Clear();
-            Console.WriteLine("Simple Calculator");
-            Console.WriteLine("===================");
-
-            double num1 = GetValidNumber("Enter the first number: ");
-            double num2 = GetValidNumber("Enter the second number: ");
-
-            Console.WriteLine("Choose an operation:");
-            Console.WriteLine("1. Addition");
-            Console.WriteLine("2. Subtraction");
-            Console.WriteLine("3. Multiplication");
-            Console.WriteLine("4. Division");
-            Console.WriteLine("5. Square Root (First Number)");
-            Console.Write("Enter your choice: ");
-
-            int choice = GetValidChoice(1, 6);
-            double result = 0;
-
-            switch (choice)
-            {
-                case 1:
-                    result = num1 + num2;
-                    break;
-                case 2:
-                    result = num1 - num2;
-                    break;
-                case 3:
-                    result = num1 * num2;
-                    break;
-                case 4:
-                    if (num2 == 0)
-                    {
-                        Console.WriteLine("Error: Division by zero is not allowed.");
-                        ContinuePrompt();
-                        continue;
-                    }
-                    result = num1 / num2;
-                    break;
-                case 5:
-                    if (num1 < 0)
-                    {
-                        Console.WriteLine("Error: Cannot calculate square root of a negative number.");
-                        ContinuePrompt();
-                        continue;
-                    }
-                    result = Math.Sqrt(num1);
-                    break;
-            }
-
-            Console.WriteLine($"Result: {result}");
-            ContinuePrompt();
+            case 1:
+                output = firstNumber + secondNumber;
+                break;
+            case 2:
+                output = firstNumber - secondNumber;
+                break;
+            case 3:
+                output = firstNumber * secondNumber;
+                break;
+            case 4:
+                if (secondNumber == 0)
+                {
+                    Console.WriteLine("Error: Division by zero is not allowed.");
+                    return;
+                }
+                output = firstNumber / secondNumber;
+                break;
+            case 5:
+                if (firstNumber < 0)
+                {
+                    Console.WriteLine("Error: Cannot calculate square root of a negative number.");
+                    return;
+                }
+                output = Math.Sqrt(firstNumber);
+                break;
         }
+
+        Console.WriteLine($"Result: {output}");
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
     }
 
-    static double GetValidNumber(string prompt)
+    static double GetNumber(string message)
     {
-        double number;
+        double value;
         while (true)
         {
-            Console.Write(prompt);
-            if (double.TryParse(Console.ReadLine(), out number))
-                return number;
+            Console.Write(message);
+            if (double.TryParse(Console.ReadLine(), out value))
+                return value;
             Console.WriteLine("Invalid input! Please enter a valid number.");
         }
     }
 
-    static int GetValidChoice(int min, int max)
+    static int GetChoice(int min, int max)
     {
-        int choice;
+        int selection;
         while (true)
         {
-            if (int.TryParse(Console.ReadLine(), out choice) && choice >= min && choice <= max)
-                return choice;
+            if (int.TryParse(Console.ReadLine(), out selection) && selection >= min && selection <= max)
+                return selection;
             Console.WriteLine($"Invalid choice! Please enter a number between {min} and {max}.");
         }
-    }
-
-    static void ContinuePrompt()
-    {
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
     }
 }
